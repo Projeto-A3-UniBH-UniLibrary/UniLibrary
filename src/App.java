@@ -84,7 +84,7 @@ public class App {
                 case 4:
                     System.out.print(" ID do livro: ");
                     int idRemover = Integer.parseInt(scanner.nextLine());
-                    
+
                     boolean removido = repositorio.remover(idRemover);
                     if (removido) {
                         System.out.println(" Livro removido com sucesso!");
