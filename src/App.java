@@ -23,11 +23,15 @@ public class App {
         while (opcao != 0) {
             System.out.println("""
                     ---------------------------------------------------------------
+
+                    == Selecione uma das opções abaixo: ==
+
                      [1] Adicionar livro
                      [2] Listar livros
                      [3] Atualizar livro
                      [4] Remover livro
                      [0] Sair
+                     
                     ---------------------------------------------------------------
                     """);
 
