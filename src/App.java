@@ -60,9 +60,11 @@ public class App {
                     } else {
                     for (int i = 0; i < livros.size(); i++) {
                             System.out.println(" " + livros.get(i));
+                            System.out.println("");
                         }
                     }
                     break;
+                    
 
                 case 3:
                     System.out.print(" ID do livro: ");
