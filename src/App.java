@@ -49,7 +49,10 @@ public class App {
                     System.out.print(" Ano: ");
                     int ano = Integer.parseInt(scanner.nextLine());
 
-                    repositorio.adicionar(titulo, autor, ano);
+                    System.out.print(" ISBN: ");
+                    String isbn = scanner.nextLine();
+
+                    repositorio.adicionar(titulo, autor, ano, isbn);
                     System.out.println(" Livro adicionado com sucesso!");
                     break;
 
@@ -79,7 +82,10 @@ public class App {
                     System.out.print(" Novo ano: ");
                     int novoAno = Integer.parseInt(scanner.nextLine());
 
-                    boolean atualizado = repositorio.atualizar(id, novoTitulo, novoAutor, novoAno);
+                    System.out.print(" Novo ISBN: ");
+                    String novoIsbn = scanner.nextLine();
+
+                    boolean atualizado = repositorio.atualizar(id, novoTitulo, novoAutor, novoAno, novoIsbn);
                     if (atualizado) {
                         System.out.println(" Livro atualizado com sucesso!");
                     } else {

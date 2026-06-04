@@ -1,43 +1,48 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 
 public class Repositorio {
-    private List<Livro> livros = new ArrayList<>();
-    private int proximoId = 1;
 
-    public void adicionar(String titulo, String autor, int ano) {
-        livros.add(new Livro(proximoId++, titulo, autor, ano));
+    private static final String URL  = "jdbc:postgresql://db.rzqcdhtnfbihriwkwntb.supabase.co:5432/postgres";
+    private static final String USER = "postgres";
+    private static final String PASS = "UniLibrary2026";
+
+    private Connection conectar() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASS);
     }
 
-    public List<Livro> listar() {
-        return livros;
-    }
-
-    public Livro buscarPorId(int id) {
-        for (int i = 0; i < livros.size(); i++) {
-            if (livros.get(i).getId() == id) {
-                return livros.get(i);
-            }
+    private boolean executar(String sql, Object... params) {
+        try (Connection con = conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
+            for (int i = 0; i < params.length; i++)
+                ps.setObject(i + 1, params[i]);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println(" Erro: " + e.getMessage());
+            return false;
         }
-        return null;
     }
 
-    public boolean atualizar(int id, String titulo, String autor, int ano) {
-        Livro livro = buscarPorId(id);
-        if (livro == null) return false;
-        livro.setTitulo(titulo);
-        livro.setAutor(autor);
-        livro.setAno(ano);
-        return true;
+    public void adicionar(String titulo, String autor, int ano, String isbn) {
+        executar("INSERT INTO livros (titulo, autor, ano, isbn) VALUES (?, ?, ?, ?)", titulo, autor, ano, isbn);
+    }
+
+    public boolean atualizar(int id, String titulo, String autor, int ano, String isbn) {
+        return executar("UPDATE livros SET titulo=?, autor=?, ano=?, isbn=? WHERE id=?", titulo, autor, ano, isbn, id);
     }
 
     public boolean remover(int id) {
-        for (int i = 0; i < livros.size(); i++) {
-            if (livros.get(i).getId() == id) {
-                livros.remove(i);
-                return true;
-            }
+        return executar("DELETE FROM livros WHERE id=?", id);
+    }
+
+    public List<Livro> listar() {
+        List<Livro> livros = new ArrayList<>();
+        try (Connection con = conectar();
+             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM livros ORDER BY id")) {
+            while (rs.next())
+                livros.add(new Livro(rs.getInt("id"), rs.getString("titulo"), rs.getString("autor"), rs.getInt("ano"), rs.getString("isbn")));
+        } catch (SQLException e) {
+            System.out.println(" Erro: " + e.getMessage());
         }
-        return false;
+        return livros;
     }
 }
