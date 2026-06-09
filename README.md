@@ -53,13 +53,11 @@ UniLibrary/
 No painel do Supabase, acesse o SQL Editor e execute:
 
 ```sql
-CREATE TABLE livros (
-    id     SERIAL PRIMARY KEY,
-    titulo TEXT NOT NULL,
-    autor  TEXT NOT NULL,
-    ano    INT  NOT NULL,
-    isbn   TEXT
-);
+create table livros (
+  id serial primary key,
+  titulo varchar(255) not null,
+  autor varchar(255) not null,
+  is
 ```
 
 ---
