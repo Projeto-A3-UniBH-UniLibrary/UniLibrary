@@ -1,18 +1,107 @@
-## Getting Started
+# UniLibrary
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Sistema de gerenciamento de livros desenvolvido em Java puro que permite cadastrar, listar, atualizar e remover livros através de um menu interativo no terminal, com os dados salvos em um banco de dados PostgreSQL hospedado no Supabase.
 
-## Folder Structure
+---
 
-The workspace contains two folders by default, where:
+## Integrantes
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- João Pedro Bastos Neves
+- Matheus Honorato Leite Teixeira
+- Vitor Augusto Apolinário Andrade
+- Alexander Rafael Goudet Costa
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+---
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Funcionalidades
 
-## Dependency Management
+- Adicionar livro com título, autor, ano e ISBN
+- Listar todos os livros cadastrados
+- Atualizar os dados de um livro pelo ID
+- Remover um livro pelo ID
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+---
+
+## Estrutura do Projeto
+
+```
+UniLibrary/
+└── Main/
+    ├── src/
+    │   ├── App.java          — ponto de entrada, menu e interação com o usuário
+    │   ├── Livro.java        — classe que representa um livro
+    │   └── Repositorio.java  — comunicação com o banco de dados
+    ├── lib/
+    │   └── postgresql-42.7.11.jar
+    └── bin/
+```
+
+---
+
+## Tecnologias Utilizadas
+
+- Java
+- JDBC
+- PostgreSQL
+- Supabase
+- Visual Studio Code
+
+---
+
+## Configuração do Banco de Dados
+
+No painel do Supabase, acesse o SQL Editor e execute:
+
+```sql
+CREATE TABLE livros (
+    id     SERIAL PRIMARY KEY,
+    titulo TEXT NOT NULL,
+    autor  TEXT NOT NULL,
+    ano    INT  NOT NULL,
+    isbn   TEXT
+);
+```
+
+---
+
+## Configuração da Conexão
+
+No arquivo Repositorio.java, substitua as credenciais com os dados do seu projeto no Supabase:
+
+```java
+private static final String URL  = "jdbc:postgresql://db.XXXXXXXX.supabase.co:5432/postgres";
+private static final String USER = "postgres";
+private static final String PASS = "sua-senha";
+```
+
+As credenciais podem ser encontradas em Project Settings → Database no painel do Supabase.
+
+---
+
+## Como Executar
+
+Com o terminal aberto na pasta Main, rode os comandos abaixo:
+
+Compilar:
+```cmd
+javac -cp "lib\postgresql-42.7.11.jar" -d bin src\*.java
+```
+
+Executar:
+```cmd
+java -cp "bin;lib\postgresql-42.7.11.jar" App
+```
+
+---
+
+## Observação
+
+Caso esteja usando o Visual Studio Code com a extensão Java instalada, basta pressionar o botão Run após configurar o arquivo .vscode/settings.json com o conteúdo abaixo:
+
+```json
+{
+    "java.project.referencedLibraries": [
+        "Main/lib/**/*.jar"
+    ]
+}
+```

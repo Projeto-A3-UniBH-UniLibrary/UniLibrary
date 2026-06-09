@@ -82,8 +82,9 @@ public class Repositorio {
              // createStatement() cria um comando SQL simples sem parâmetros
              // executeQuery() executa um SELECT e retorna um ResultSet com as linhas encontradas
              // ResultSet funciona como um cursor que percorre cada linha retornada pelo banco
-             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM livros ORDER BY id")) {
-
+        ResultSet rs = con.createStatement().executeQuery("SELECT * FROM livros ORDER BY id")) 
+        
+        {
             // next() avança o cursor para a próxima linha, retorna false quando não há mais linhas
             while (rs.next())
 
