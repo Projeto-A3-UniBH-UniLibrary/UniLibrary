@@ -57,7 +57,9 @@ create table livros (
   id serial primary key,
   titulo varchar(255) not null,
   autor varchar(255) not null,
-  is
+  isbn varchar(50) not null,
+  ano int not null
+);
 ```
 
 ---
